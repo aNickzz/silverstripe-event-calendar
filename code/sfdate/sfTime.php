@@ -11,13 +11,14 @@
 namespace Altumo\Utils\sfDate;
 
 /**
- *
  * sfTime class.
  *
  * A library for manipulating dates in symfony (php).
  *
  * @package    sfDateTimePlugin
+ *
  * @author    Stephen Riesenberg <sjohnr@gmail.com>
+ *
  * @version    SVN: $Id$
  */
 class sfTime
@@ -84,9 +85,13 @@ class sfTime
      * @param    timestamp    a timestamp for the calculation
      * @param    int            the number of units to add to the given date
      * @param    int            the unit to add by
-     * @return    timestamp    the timestamp result of the calculation
+     * @param null|mixed $ts
+     * @param mixed $num
+     * @param mixed $unit
      *
-     * @throws    sfDateTimeException
+     * @throws sfDateTimeException
+     *
+     * @return timestamp the timestamp result of the calculation
      */
     public static function add($ts = null, $num = 1, $unit = sfTime::DAY)
     {
@@ -147,7 +152,11 @@ class sfTime
      * @param    timestamp    a timestamp for the calculation
      * @param    int            the number of units to add to the given date
      * @param    int            the unit to add by
-     * @return    timestamp    the timestamp result of the calculation
+     * @param null|mixed $ts
+     * @param mixed $num
+     * @param mixed $unit
+     *
+     * @return timestamp the timestamp result of the calculation
      *
      * @see        add
      */
@@ -160,7 +169,9 @@ class sfTime
      * Returns the timestamp with the date but without the time of day.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function clearTime($ts = null)
     {
@@ -180,7 +191,9 @@ class sfTime
      * @deprecated This is a deprecated function. Do not use!
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function clearDate($ts = null)
     {
@@ -199,7 +212,9 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function clearSecond($ts = null)
     {
@@ -213,7 +228,9 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function clearMinute($ts = null)
     {
@@ -227,7 +244,9 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function clearHour($ts = null)
     {
@@ -241,7 +260,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $second
+     *
+     * @return timestamp
      */
     public static function setSecond($ts = null, $second = 0)
     {
@@ -255,7 +277,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $minute
+     *
+     * @return timestamp
      */
     public static function setMinute($ts = null, $minute = 0)
     {
@@ -269,7 +294,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $hour
+     *
+     * @return timestamp
      */
     public static function setHour($ts = null, $hour = 0)
     {
@@ -283,7 +311,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $day
+     *
+     * @return timestamp
      */
     public static function setDay($ts = null, $day = 1)
     {
@@ -297,7 +328,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $month
+     *
+     * @return timestamp
      */
     public static function setMonth($ts = null, $month = 1)
     {
@@ -311,7 +345,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $year
+     *
+     * @return timestamp
      */
     public static function setYear($ts = null, $year = 1970)
     {
@@ -326,7 +363,9 @@ class sfTime
      * Alias for sfTime::addDay
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function tomorrow($ts = null)
     {
@@ -339,7 +378,9 @@ class sfTime
      * Alias for sfTime::subtractDay
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function yesterday($ts = null)
     {
@@ -351,7 +392,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addSecond($ts = null, $num = 1)
     {
@@ -363,7 +407,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractSecond($ts = null, $num = 1)
     {
@@ -375,7 +422,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addMinute($ts = null, $num = 1)
     {
@@ -387,7 +437,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractMinute($ts = null, $num = 1)
     {
@@ -399,7 +452,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addHour($ts = null, $num = 1)
     {
@@ -411,7 +467,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractHour($ts = null, $num = 1)
     {
@@ -423,7 +482,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addDay($ts = null, $num = 1)
     {
@@ -435,7 +497,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractDay($ts = null, $num = 1)
     {
@@ -447,7 +512,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addWeek($ts = null, $num = 1)
     {
@@ -459,7 +527,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractWeek($ts = null, $num = 1)
     {
@@ -471,7 +542,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addMonth($ts = null, $num = 1)
     {
@@ -483,7 +557,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractMonth($ts = null, $num = 1)
     {
@@ -495,7 +572,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addQuarter($ts = null, $num = 1)
     {
@@ -507,7 +587,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractQuarter($ts = null, $num = 1)
     {
@@ -519,7 +602,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addYear($ts = null, $num = 1)
     {
@@ -531,7 +617,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractYear($ts = null, $num = 1)
     {
@@ -543,7 +632,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addDecade($ts = null, $num = 1)
     {
@@ -555,7 +647,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractDecade($ts = null, $num = 1)
     {
@@ -567,7 +662,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addCentury($ts = null, $num = 1)
     {
@@ -579,7 +677,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractCentury($ts = null, $num = 1)
     {
@@ -591,7 +692,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function addMillenium($ts = null, $num = 1)
     {
@@ -603,7 +707,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $num
+     *
+     * @return timestamp
      */
     public static function subtractMillenium($ts = null, $num = 1)
     {
@@ -614,7 +721,9 @@ class sfTime
      * Returns the timestamp for first day of the week for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function firstDayOfWeek($ts = null)
     {
@@ -630,7 +739,9 @@ class sfTime
      * Returns the timestamp for last day of the week for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function finalDayOfWeek($ts = null)
     {
@@ -641,7 +752,9 @@ class sfTime
      * Returns the timestamp for first day of the month for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function firstDayOfMonth($ts = null)
     {
@@ -657,7 +770,9 @@ class sfTime
      * Returns the timestamp for last day of the month for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function finalDayOfMonth($ts = null)
     {
@@ -673,7 +788,9 @@ class sfTime
      * </code>
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function firstDayOfQuarter($ts = null)
     {
@@ -693,7 +810,9 @@ class sfTime
      * Returns the timestamp for last day of the quarter for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function finalDayOfQuarter($ts = null)
     {
@@ -704,7 +823,9 @@ class sfTime
      * Returns the timestamp for first day of the year for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function firstDayOfYear($ts = null)
     {
@@ -720,7 +841,9 @@ class sfTime
      * Returns the timestamp for last day of the year for the given date.
      *
      * @param    timestamp
-     * @return    timestamp
+     * @param null|mixed $ts
+     *
+     * @return timestamp
      */
     public static function finalDayOfYear($ts = null)
     {
@@ -732,7 +855,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int            the day of week
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $day
+     *
+     * @return timestamp
      */
     public static function nextDay($ts = null, $day = sfTime::SUNDAY)
     {
@@ -756,7 +882,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int            the day of week
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $day
+     *
+     * @return timestamp
      */
     public static function previousDay($ts = null, $day = sfTime::SUNDAY)
     {
@@ -780,7 +909,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int            the month of year
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $month
+     *
+     * @return timestamp
      */
     public static function nextMonth($ts = null, $month = sfTime::JANUARY)
     {
@@ -804,7 +936,10 @@ class sfTime
      *
      * @param    timestamp
      * @param    int            the month of year
-     * @return    timestamp
+     * @param null|mixed $ts
+     * @param mixed $month
+     *
+     * @return timestamp
      */
     public static function previousMonth($ts = null, $month = sfTime::JANUARY)
     {

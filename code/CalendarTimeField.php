@@ -4,23 +4,25 @@ namespace Unclecheese\EventCalendar;
 
 use SilverStripe\Forms\TimeField;
 
+class CalendarTimeField extends TimeField
+{
+    public function Field($properties = [])
+    {
+        $attributes = [
+            'type' => 'text',
+            'class' => 'text' . ($this->extraClass() ? $this->extraClass() : ''),
+            'id' => $this->id(),
+            'name' => $this->Name(),
+            'value' => $this->attrValue(),
+            'tabindex' => $this->getTabIndex(),
+            'maxlength' => ($this->maxLength) ? $this->maxLength : null,
+            'size' => ($this->maxLength) ? min($this->maxLength, 30) : null,
+        ];
 
-class CalendarTimeField extends TimeField {
+        if ($this->disabled) {
+            $attributes['disabled'] = 'disabled';
+        }
 
-	function Field($properties = array()) {
-		$attributes = array(
-			'type' => 'text',
-			'class' => 'text' . ($this->extraClass() ? $this->extraClass() : ''),
-			'id' => $this->id(),
-			'name' => $this->Name(),
-			'value' => $this->attrValue(),
-			'tabindex' => $this->getTabIndex(),
-			'maxlength' => ($this->maxLength) ? $this->maxLength : null,
-			'size' => ($this->maxLength) ? min( $this->maxLength, 30 ) : null
-		);
-
-		if($this->disabled) $attributes['disabled'] = 'disabled';
-
-		return $this->createTag('input', $attributes);
-	}
+        return $this->createTag('input', $attributes);
+    }
 }

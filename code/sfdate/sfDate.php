@@ -11,7 +11,6 @@
 namespace Altumo\Utils\sfDate;
 
 /**
- *
  * sfDate class.
  *
  * A class for representing a date/time value as an object.
@@ -19,7 +18,9 @@ namespace Altumo\Utils\sfDate;
  * This class allows for chainable calculations using the sfTime utility class.
  *
  * @package    sfDateTimePlugin
+ *
  * @author    Stephen Riesenberg <sjohnr@gmail.com>
+ *
  * @version    SVN: $Id$
  */
 class sfDate
@@ -45,7 +46,9 @@ class sfDate
      * </code>
      *
      * @param    mixed    timestamp, string, or sfDate object
-     * @return    sfDate
+     * @param null|mixed $value
+     *
+     * @return sfDate
      */
     public static function getInstance($value = null)
     {
@@ -56,6 +59,7 @@ class sfDate
      * Construct an sfDate object.
      *
      * @param    mixed    timestamp, string, or sfDate object
+     * @param null|mixed $value
      */
     public function __construct($value = null)
     {
@@ -65,7 +69,9 @@ class sfDate
     /**
      * Format the date according to the <code>date</code> function.
      *
-     * @return    string
+     * @param mixed $format
+     *
+     * @return string
      */
     public function format($format)
     {
@@ -75,7 +81,9 @@ class sfDate
     /**
      * Formats the date according to the <code>format_date</code> helper of the Date helper group.
      *
-     * @return    string
+     * @param mixed $format
+     *
+     * @return string
      */
     public function date($format = 'd')
     {
@@ -85,7 +93,9 @@ class sfDate
     /**
      * Formats the date according to the <code>format_datetime</code> helper of the Date helper group.
      *
-     * @return    string
+     * @param mixed $format
+     *
+     * @return string
      */
     public function datetime($format = 'F')
     {
@@ -95,7 +105,7 @@ class sfDate
     /**
      * Format the date as a datetime value.
      *
-     * @return    string
+     * @return string
      */
     public function dump()
     {
@@ -105,10 +115,12 @@ class sfDate
     /**
      * Retrieves the given unit of time from the timestamp.
      *
-     * @param    int    unit of time (accepts sfTime constants).
-     * @return    int    the unit of time
+     * @param    int    unit of time (accepts sfTime constants)
+     * @param mixed $unit
      *
-     * @throws    sfDateTimeException
+     * @throws sfDateTimeException
+     *
+     * @return int the unit of time
      */
     public function retrieve($unit = sfTime::DAY)
     {
@@ -143,7 +155,7 @@ class sfDate
     /**
      * Retrieve the timestamp value of this sfDate instance.
      *
-     * @return    timestamp
+     * @return timestamp
      */
     public function get()
     {
@@ -158,7 +170,9 @@ class sfDate
      * - string, parsed with <code>strtotime</code>
      * - sfDate object
      *
-     * @return    sfDate    the modified object, for chainability
+     * @param null|mixed $value
+     *
+     * @return sfDate the modified object, for chainability
      */
     public function set($value = null)
     {
@@ -175,7 +189,7 @@ class sfDate
     /**
      * Resets the timestamp value of this sfDate instance to its original value.
      *
-     * @return    sfDate    the reset object, for chainability
+     * @return sfDate the reset object, for chainability
      */
     public function reset()
     {
@@ -188,7 +202,9 @@ class sfDate
      * Compares two date values.
      *
      * @param    mixed    timestamp, string, or sfDate object
-     * @return    int        -1, 0, or 1
+     * @param mixed $value
+     *
+     * @return int -1, 0, or 1
      */
     public function cmp($value)
     {
@@ -197,12 +213,12 @@ class sfDate
         if ($this->ts < $ts) {
             // less than
             return -1;
-        } else {
-            if ($this->ts > $ts) {
-                // greater than
-                return 1;
-            }
         }
+        if ($this->ts > $ts) {
+            // greater than
+            return 1;
+        }
+
 
         // equal to
         return 0;
@@ -213,6 +229,7 @@ class sfDate
      *
      * @param    mixed    timestamp, string, or sfDate object
      * @param    int        the difference in seconds
+     * @param mixed $value
      */
     public function diff($value)
     {
@@ -232,7 +249,10 @@ class sfDate
      *   $ts = $dt->addMonth(5)->firstDayOfMonth()->get();
      * </code>
      *
-     * @return    sfDate    the modified object, for chainability
+     * @param mixed $method
+     * @param mixed $arguments
+     *
+     * @return sfDate the modified object, for chainability
      */
     public function __call($method, $arguments)
     {

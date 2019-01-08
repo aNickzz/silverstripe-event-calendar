@@ -10,12 +10,15 @@
  */
 
 namespace Altumo\Utils\sfDate;
+
 /**
  * sfDateTimeException is thrown when an error occurs while manipulating dates.
  *
  * @package		sfDateTimePlugin
  * @subpackage	exception
+ *
  * @author		Stephen Riesenberg <sjohnr@gmail.com>
+ *
  * @version		SVN: $Id$
  */
 class sfDateTimeException extends \Exception
@@ -25,6 +28,8 @@ class sfDateTimeException extends \Exception
      *
      * @param	string	the error message
      * @param	int		the error code
+     * @param null|mixed $message
+     * @param mixed $code
      */
     public function __construct($message = null, $code = 0)
     {

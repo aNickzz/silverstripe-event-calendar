@@ -11,13 +11,14 @@
 namespace Altumo\Utils\sfDate;
 
 /**
- *
  * sfDateTimeToolkit class.
  *
  * A toolkit for the sfDateTimePlugin.
  *
  * @package    sfDateTimePlugin
+ *
  * @author    Stephen Riesenberg <sjohnr@gmail.com>
+ *
  * @version    SVN: $Id$
  */
 class sfDateTimeToolkit
@@ -26,7 +27,9 @@ class sfDateTimeToolkit
      * Breaks down the individual components of the timestamp.
      *
      * @param    timestamp
-     * @return    array
+     * @param null|mixed $ts
+     *
+     * @return array
      */
     public static function breakdown($ts = null)
     {
@@ -49,7 +52,7 @@ class sfDateTimeToolkit
     /**
      * Returns the current timestamp.
      *
-     * @return    timestamp
+     * @return timestamp
      *
      * @see        time
      */
@@ -62,24 +65,25 @@ class sfDateTimeToolkit
      * Retrieve the timestamp from a number of different formats.
      *
      * @param    mixed    value to use for timestamp retrieval
+     * @param null|mixed $value
      */
     public static function getTS($value = null)
     {
         if ($value === null) {
             return sfDateTimeToolkit::now();
-        } else {
-            if ($value instanceof sfDate) {
-                return $value->get();
-            } else {
-                if (!is_numeric($value)) {
-                    return strtotime($value);
-                } else {
-                    if (is_numeric($value)) {
-                        return $value;
-                    }
-                }
-            }
         }
+        if ($value instanceof sfDate) {
+            return $value->get();
+        }
+        if (!is_numeric($value)) {
+            return strtotime($value);
+        }
+        if (is_numeric($value)) {
+            return $value;
+        }
+
+
+
 
         throw new sfDateTimeException(sprintf('A timestamp could not be retrieved from the value: %s', $value));
     }

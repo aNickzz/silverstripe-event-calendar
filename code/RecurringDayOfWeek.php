@@ -2,65 +2,69 @@
 
 namespace Unclecheese\EventCalendar;
 
-use SilverStripe\ORM\DataObject;
-use SilverStripe\ORM\DataList;
 use Altumo\Utils\sfDate\sfDate;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 
+class RecurringDayOfWeek extends DataObject
+{
+    private static $db = [
+        'Value' => 'Int',
+    ];
+
+    private static $default_sort = 'Value ASC';
+
+    private static $belongs_many_many = [
+        'CalendarEvent' => CalendarEvent::class,
+    ];
+
+    public static function create_default_records()
+    {
+        for ($i = 0; $i <= 6; $i++) {
+            $record = new RecurringDayOfWeek();
+            $record->Value = $i;
+            $record->write();
+        }
+    }
+
+    public function requireDefaultRecords()
+    {
+        parent::requireDefaultRecords();
+        $records = DataList::create(RecurringDayOfWeek::class);
+        if (!$records->exists()) {
+            self::create_default_records();
+        } elseif ($records->count() != 7) {
+            foreach ($records as $record) {
+                $record->delete();
+            }
+            self::create_default_records();
+        }
+    }
+
+    public function getTitle()
+    {
+        return strftime('%a', sfDate::getInstance()->nextDay($this->Value)->get());
+    }
 
 
-class RecurringDayOfWeek extends DataObject {
+    public function canCreate($member = null, $context = [])
+    {
+        return Permission::check('CMS_ACCESS_CMSMain');
+    }
 
-	private static $db = array (
-		'Value' => 'Int'
-	);
+    public function canEdit($member = null)
+    {
+        return Permission::check('CMS_ACCESS_CMSMain');
+    }
 
-	private static $default_sort = "Value ASC";
+    public function canDelete($member = null)
+    {
+        return Permission::check('CMS_ACCESS_CMSMain');
+    }
 
-	private static $belongs_many_many = array (
-		'CalendarEvent' => CalendarEvent::class
-	);
-
-	static function create_default_records() {
-		for($i = 0; $i <= 6; $i++) {
-			$record = new RecurringDayOfWeek();
-			$record->Value = $i;
-			$record->write();
-		}
-	}
-
-	public function requireDefaultRecords() {
-		parent::requireDefaultRecords();
-		$records = DataList::create(RecurringDayOfWeek::class);
-		if(!$records->exists()) {
-			self::create_default_records();
-		}
-		elseif($records->count() != 7)  {
-			foreach($records as $record) {
-				$record->delete();
-			}
-			self::create_default_records();
-		}
-	}
-
-	public function getTitle() {
-		return strftime("%a", sfDate::getInstance()->nextDay($this->Value)->get());
-	}
-
-
-	public function canCreate($member = null, $context = array()) {
-	    return Permission::check("CMS_ACCESS_CMSMain");
-	}
-
-	public function canEdit($member = null) {
-	    return Permission::check("CMS_ACCESS_CMSMain");
-	}
-
-	public function canDelete($member = null) {
-	    return Permission::check("CMS_ACCESS_CMSMain");
-	}
-
-	public function canView($member = null) {
-	    return Permission::check("CMS_ACCESS_CMSMain");
-	}
+    public function canView($member = null)
+    {
+        return Permission::check('CMS_ACCESS_CMSMain');
+    }
 }

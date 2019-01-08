@@ -2,38 +2,37 @@
 
 namespace Unclecheese\EventCalendar;
 
-use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use Unclecheese\EventCalendar\Calendar;
+use SilverStripe\ORM\DataObject;
 
+class ICSFeed extends DataObject
+{
+    private static $db = [
+        'Title' => 'Varchar(100)',
+        'URL' => 'Varchar(255)',
+    ];
 
+    private static $has_one = [
+        'Calendar' => Calendar::class,
+    ];
 
-class ICSFeed extends DataObject {
+    public function getCMSFields()
+    {
+        $f = new FieldList(
+            new TextField('Title', _t('ICSFeed.TITLEOFFEED', 'Title of feed')),
+            new TextField('URL', _t('ICSFeed.URLLINK', 'URL'), 'http://')
+        );
 
-	private static $db = array (
-		'Title' => 'Varchar(100)',
-		'URL' => 'Varchar(255)'
-	);
+        $this->extend('updateCMSFields', $f);
 
-	private static $has_one = array (
-		'Calendar' => Calendar::class
-	);
+        return $f;
+    }
 
-	public function getCMSFields() {
-		$f = new FieldList (
-			new TextField('Title',_t('ICSFeed.TITLEOFFEED','Title of feed')),
-			new TextField('URL',_t('ICSFeed.URLLINK','URL'),'http://')
-		);
-
-		$this->extend('updateCMSFields', $f);
-
-		return $f;
-	}
-
-	public function summaryFields() {
-		return array (
-				'Title' => _t('ICSFeed.TITLE','Title'),
-		);
-	}
+    public function summaryFields()
+    {
+        return [
+                'Title' => _t('ICSFeed.TITLE', 'Title'),
+        ];
+    }
 }

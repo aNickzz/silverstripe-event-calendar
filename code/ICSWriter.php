@@ -2,9 +2,9 @@
 
 namespace Unclecheese\EventCalendar;
 
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\DateField;
 use SilverStripe\Forms\TimeField;
-use SilverStripe\Control\Director;
 
 /**
  * A simple ICS writer.
@@ -26,57 +26,60 @@ use SilverStripe\Control\Director;
  * </code>
  *
  * @todo Support recurring events
+ *
  * @copyright 2011 Dimension27
  * @author Alex Hayes <alex.hayes@dimension27.com>
- * @link https://github.com/dimension27/EventCalendar
+ *
+ * @see https://github.com/dimension27/EventCalendar
  */
 class ICSWriter
 {
+    /**
+     * @var Calendar
+     */
+    public $calendar;
 
-	/**
-	 * @var Calendar
-	 */
-	public $calendar;
+    public $host;
+    public $prodid;
+    public $limit;
 
-	public $host;
-	public $prodid;
-	public $limit;
+    /**
+     * @var array
+     */
+    protected $lines = [];
 
-	/**
-	 * @var array
-	 */
-	protected $lines = array();
-
-	/**
-	 * Construct an ICSWriter instance.
-	 *
-	 * @param Calendar $calendar The calendar to render.
-	 * @param string $host       The calendar host.
-	 * @param string $prodid     Specifies the identifier for the product that created the iCalendar object. If
-	 *                           null then $host will be used in the generation of this.
-	 * @param int $limit         Limit the amount of upcoming events to this number
-	 *
-	 * @author Alex Hayes <alex.hayes@dimension27.com>
-	 */
-    public function __construct( Calendar $calendar, $host, $prodid = null, $limit = 100 ) {
-    	$this->calendar = $calendar;
-    	$this->host = $host;
-    	$this->prodid = $prodid;
-    	$this->limit = $limit;
+    /**
+     * Construct an ICSWriter instance.
+     *
+     * @param Calendar $calendar the calendar to render
+     * @param string $host the calendar host
+     * @param string $prodid Specifies the identifier for the product that created the iCalendar object. If
+     *                       null then $host will be used in the generation of this.
+     * @param int $limit Limit the amount of upcoming events to this number
+     *
+     * @author Alex Hayes <alex.hayes@dimension27.com>
+     */
+    public function __construct(Calendar $calendar, $host, $prodid = null, $limit = 100)
+    {
+        $this->calendar = $calendar;
+        $this->host = $host;
+        $this->prodid = $prodid;
+        $this->limit = $limit;
     }
 
-    public function sendDownload() {
-		header("Cache-Control: private");
-		header("Content-Description: File Transfer");
-		header("Content-Type: text/calendar");
-		header("Content-Transfer-Encoding: binary");
-		$filename = preg_replace("/[^a-zA-Z0-9s]/", "", $this->calendar->Title) . '.ics';
-  		if(stristr($_SERVER['HTTP_USER_AGENT'], "MSIE")) {
- 			header("Content-disposition: filename=" . $filename . "; attachment;");
-  		} else {
- 			header("Content-disposition: attachment; filename=" . $filename);
-  		}
-  		echo $this->getOutput();
+    public function sendDownload()
+    {
+        header('Cache-Control: private');
+        header('Content-Description: File Transfer');
+        header('Content-Type: text/calendar');
+        header('Content-Transfer-Encoding: binary');
+        $filename = preg_replace('/[^a-zA-Z0-9s]/', '', $this->calendar->Title) . '.ics';
+        if (stristr($_SERVER['HTTP_USER_AGENT'], 'MSIE')) {
+            header('Content-disposition: filename=' . $filename . '; attachment;');
+        } else {
+            header('Content-disposition: attachment; filename=' . $filename);
+        }
+        echo $this->getOutput();
     }
 
     /**
@@ -84,51 +87,51 @@ class ICSWriter
      *
      * @author Alex Hayes <alex.hayes@dimension27.com>
      */
-    public function getOutput() {
-    	$this->lines = array();
+    public function getOutput()
+    {
+        $this->lines = [];
 
-		$this->addLine('BEGIN:VCALENDAR');
-		$this->addLine('VERSION:2.0');
+        $this->addLine('BEGIN:VCALENDAR');
+        $this->addLine('VERSION:2.0');
 
-		if( is_null($this->prodid) ) {
-			$this->addLine("PRODID:" . '-//'.$this->host.'//NONSGML v1.0//EN');
-		}
-		elseif( !is_null($this->prodid) ) {
-			$this->addLine("PRODID:" . $this->prodid);
-		}
+        if (is_null($this->prodid)) {
+            $this->addLine('PRODID:' . '-//' . $this->host . '//NONSGML v1.0//EN');
+        } elseif (!is_null($this->prodid)) {
+            $this->addLine('PRODID:' . $this->prodid);
+        }
 
-    	$upcomingEvents = $this->calendar->UpcomingEvents($this->limit); /* @var $upcomingEvents DataObjectSet */
-    	foreach($upcomingEvents as $dateTime) { /* @var $event CalendarDateTime */
-    		$this->addDateTime($dateTime);
-    	}
+        $upcomingEvents = $this->calendar->UpcomingEvents($this->limit); /* @var $upcomingEvents DataObjectSet */
+        foreach ($upcomingEvents as $dateTime) { /* @var $event CalendarDateTime */
+            $this->addDateTime($dateTime);
+        }
 
-		$this->addLine('END:VCALENDAR');
+        $this->addLine('END:VCALENDAR');
 
-		return implode("\r\n", $this->lines);
+        return implode("\r\n", $this->lines);
     }
 
     /**
      * Add a line to the stack.
      *
      * @param string $line
-     * @return void
      *
      * @author Alex Hayes <alex.hayes@dimension27.com>
      */
-    protected function addLine($line) {
-    	$this->lines[] = $line;
+    protected function addLine($line)
+    {
+        $this->lines[] = $line;
     }
 
     /**
-     *
-     *
      * @param CalendarDateTime $dateTime
+     *
      * @return string
      *
      * @author Alex Hayes <alex.hayes@dimension27.com>
      */
-    protected function getUID( CalendarDateTime $dateTime ) {
-    	return $dateTime->ID.'@'.$this->host;
+    protected function getUID(CalendarDateTime $dateTime)
+    {
+        return $dateTime->ID . '@' . $this->host;
     }
 
     /**
@@ -136,40 +139,41 @@ class ICSWriter
      *
      * @param Date $date
      * @param Time $time
+     *
      * @return string
      *
      * @todo Add timezone support - note atm there is no timezone support in either Date or Time.
      *
      * @author Alex Hayes <alex.hayes@dimension27.com>
      */
-	protected function getFormatedDateTime( DateField $date = null, TimeField $time = null ) {
-		$timestamp = null;
-		if($date && $time) {
-			$timestamp = strtotime($date . ' ' . $time);
-		}
-		else {
-			$timestamp = time();
-		}
-		return gmdate('Ymd\THis\Z', $timestamp);
-	}
+    protected function getFormatedDateTime(DateField $date = null, TimeField $time = null)
+    {
+        $timestamp = null;
+        if ($date && $time) {
+            $timestamp = strtotime($date . ' ' . $time);
+        } else {
+            $timestamp = time();
+        }
 
-	/**
-	 * Add a CalendarDateTime to the stack.
-	 *
-	 * @param CalendarDateTime $dateTime
-	 * @return void
-	 *
-	 * @author Alex Hayes <alex.hayes@dimension27.com>
-	 */
-    protected function addDateTime( CalendarDateTime $dateTime ) {
-    	$this->addLine('BEGIN:VEVENT');
-		$this->addLine('UID:' . $this->getUID($dateTime) );
-		$this->addLine('DTSTAMP;TZID=' . Calendar::config()->timezone . ':' . $this->getFormatedDateTime());
-		$this->addLine('DTSTART;TZID=' . Calendar::config()->timezone . ':' . $this->getFormatedDateTime($dateTime->dbObject('StartDate'), $dateTime->dbObject('StartTime')));
-		$this->addLine('DTEND;TZID='   . Calendar::config()->timezone . ':' . $this->getFormatedDateTime($dateTime->dbObject('EndDate'), $dateTime->dbObject('EndTime')));
-		$this->addLine('URL:' . Director::absoluteURL($dateTime->ICSLink()));
-		$this->addLine('SUMMARY:CHARSET=UTF-8:' . $dateTime->Event()->Title);
-		$this->addLine('END:VEVENT');
+        return gmdate('Ymd\THis\Z', $timestamp);
     }
 
+    /**
+     * Add a CalendarDateTime to the stack.
+     *
+     * @param CalendarDateTime $dateTime
+     *
+     * @author Alex Hayes <alex.hayes@dimension27.com>
+     */
+    protected function addDateTime(CalendarDateTime $dateTime)
+    {
+        $this->addLine('BEGIN:VEVENT');
+        $this->addLine('UID:' . $this->getUID($dateTime));
+        $this->addLine('DTSTAMP;TZID=' . Calendar::config()->timezone . ':' . $this->getFormatedDateTime());
+        $this->addLine('DTSTART;TZID=' . Calendar::config()->timezone . ':' . $this->getFormatedDateTime($dateTime->dbObject('StartDate'), $dateTime->dbObject('StartTime')));
+        $this->addLine('DTEND;TZID=' . Calendar::config()->timezone . ':' . $this->getFormatedDateTime($dateTime->dbObject('EndDate'), $dateTime->dbObject('EndTime')));
+        $this->addLine('URL:' . Director::absoluteURL($dateTime->ICSLink()));
+        $this->addLine('SUMMARY:CHARSET=UTF-8:' . $dateTime->Event()->Title);
+        $this->addLine('END:VEVENT');
+    }
 }
