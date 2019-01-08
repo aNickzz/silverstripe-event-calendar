@@ -1,6 +1,6 @@
 {
     "name": "unclecheese/event-calendar",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "description": "Event Calendar for the SilverStripe CMS",
     "keywords": [
         "silverstripe",
